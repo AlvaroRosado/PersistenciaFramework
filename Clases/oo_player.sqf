@@ -39,17 +39,18 @@ CLASS("OO_PLAYER")
 	};
 	
 	PUBLIC FUNCTION("","getHitPoint") {
-		// getAllHitPointsDamage MEMBER("unit", nil);
-		_hitPoints = [];
-		_hpDamage = getAllHitPointsDamage MEMBER("vehicle", _this);
-
-		{
-			if (_x != "") then
-			{
-				_hitPoints pushBack [_x, (_hpDamage select 2) select _forEachIndex];
-			};
-		} forEach (_hpDamage select 0);
-		_hitPoints;
+		// getAllHitPointsDamage MEMBER("unit", nil);		
+		// _hpDamage = getAllHitPointsDamage MEMBER("unit", nil);
+		 // "head"
+		 // "body"
+		 // "arm_r"
+		 // "arm_l"
+		 // "leg_r"
+		 // "leg_l"
+		// _hpDamage;
+		_damageLife = (MEMBER("unit", nil) getVariable["ACE_medical_bodyPartStatus", [0,0,0,0,0,0]]);
+		MEMBER("ToLog", _damageLife joinString "");
+		_damageLife;
 	};
 
 
@@ -182,17 +183,10 @@ CLASS("OO_PLAYER")
 				/* HITPOINT */
 				case 2:
 				{
-					_nombresHitPoints = _x select 0;
-					_partesHitPoints = _x select 1;
-					_cifrasDamage = _x select 2;
-					_indice = 0;
+					_hitSelections = ["head", "body", "arm_r", "arm_l", "leg_r", "leg_l"];
 					{
-						_partehit = _partesHitPoints select _indice;			
-						_damage = _cifrasDamage select _indice;		
-						[_player, _x, _damage, _player, "bullet", -1,_player] remoteExec ["ace_medical_fnc_handleDamage", _player, false];
-						_indice = _indice + 1;
-					} forEach _nombresHitPoints;
-
+						[_player, _x, _hitSelections select _forEachIndex, "bullet"] remoteExec ["ace_medical_fnc_addDamageToUnit", _player, false];						
+					} forEach _x;	
 				};
 				/* POSICION */
 				case 3:

@@ -24,9 +24,11 @@ CLASS("OO_VEHICLE")
 	PUBLIC FUNCTION("","getPosicion") {
 		getPos MEMBER("vehicle", nil);
 	};
+	
 	PUBLIC FUNCTION("object","setVehicle") {
 		MEMBER("vehicle", _this);
 	};
+	
 	PUBLIC FUNCTION("","getHitPoint") {
 		_hitPoints = [];
 		_hpDamage = getAllHitPointsDamage MEMBER("vehicle", _this);
